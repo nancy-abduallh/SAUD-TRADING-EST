@@ -8,6 +8,7 @@ import { SectorsGrid } from "@/components/sections/SectorsGrid";
 import { VisionValues } from "@/components/sections/VisionValues";
 import { DigitalEcosystem } from "@/components/sections/DigitalEcosystem";
 import { ComparisonTable } from "@/components/sections/ComparisonTable";
+import { BrandsSection } from "@/components/sections/BrandsSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { Footer } from "@/components/sections/Footer";
 import { LazySection } from "@/components/effects/LazySection";
@@ -86,6 +87,7 @@ function Index() {
             <LazySection minHeight="500px" id="clients">
                 <ClientsMarquee />
             </LazySection>
+            <BrandsSection />
             <LazySection minHeight="500px" id="about">
                 <AboutSection />
             </LazySection>
