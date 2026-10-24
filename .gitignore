@@ -33,3 +33,5 @@ dist-ssr
 
 originals-backup/
 admin/cache/
+powershell.cmd
+powershell.bat

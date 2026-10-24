@@ -5,6 +5,7 @@
  */
 
 import {
+    Award,
     Bean,
     Beaker,
     Boxes,
@@ -27,8 +28,11 @@ import {
     Recycle,
     Scroll,
     ShoppingBag,
+    Sparkles,
     Sprout,
+    Star,
     Target,
+    Users,
     Video,
     Wand2,
     Wheat,
@@ -95,6 +99,15 @@ import microTargeting from "@/assets/products/micro-targeting.jfif";
 import visualIdentity from "@/assets/products/visual-identity.jfif";
 import aiLogos from "@/assets/products/ai-logos.jfif";
 import videoVr from "@/assets/products/video-vr.jfif";
+import mediaTvCoverage from "@/assets/products/media-tv-coverage.jpg";
+import pressRelease from "@/assets/products/press-release.jpg";
+import pressConference from "@/assets/products/press-conference.jpg";
+import influencerMarketing from "@/assets/products/influencer-marketing.jpg";
+import celebrityAttendance from "@/assets/products/celebrity-attendance.jpg";
+import celebrityCampaign from "@/assets/products/celebrity-campaign.jpg";
+import grandOpening from "@/assets/products/grand-opening.jpg";
+import eventExhibitionCoverage from "@/assets/products/event-exhibition-coverage.jpg";
+import droneEventCoverage from "@/assets/products/drone-event-coverage.jpg";
 
 // ── Products map ────────────────────────────────────────────────────────────
 export const products = {
@@ -467,6 +480,66 @@ export const products = {
             icon: Video,
             image: videoVr,
             blurb: "إنتاج ضخم بتقنية الواقع الافتراضي لمحتوى استثنائي.",
+        },
+    ],
+    "تغطية إعلامية": [
+        {
+            name: "تغطية صحفية وتلفزيونية",
+            icon: Video,
+            image: mediaTvCoverage,
+            blurb: "تغطية صحفية وتلفزيونية شاملة وتنسيق اللقاءات مع كبرى القنوات والمنصات الإخبارية.",
+        },
+        {
+            name: "بيانات وتقارير صحفية",
+            icon: Scroll,
+            image: pressRelease,
+            blurb: "صياغة ونشر البيانات والتقارير الصحفية الاحترافية وتوزيعها عبر شبكات الإعلام الرقمي.",
+        },
+        {
+            name: "مؤتمرات صحفية وبث مباشر",
+            icon: Radar,
+            image: pressConference,
+            blurb: "إدارة المؤتمرات الصحفية مع خدمات البث المباشر والتوثيق بجودة سينمائية متطورة.",
+        },
+    ],
+    "مشاهير": [
+        {
+            name: "إعلانات كبار المؤثرين",
+            icon: Star,
+            image: influencerMarketing,
+            blurb: "حملات ترويجية مدروسة بالتعاون مع نخبة المشاهير وصناع المحتوى لتعزيز مبيعاتك وحضورك.",
+        },
+        {
+            name: "حضور وتنسيق الفعاليات",
+            icon: Sparkles,
+            image: celebrityAttendance,
+            blurb: "تنسيق دعوة وحضور مشاهير وشخصيات مجتمعية بارزة لفعالياتك ومناسبات إطلاق علامتك.",
+        },
+        {
+            name: "إدارة حملات المشاهير",
+            icon: Users,
+            image: celebrityCampaign,
+            blurb: "إدارة متكاملة للعقود وصناعة الأفكار والمحتوى الإعلاني مع قياس دقيق لتفاعل الجمهور.",
+        },
+    ],
+    "حفلات افتتاح أو تغطية": [
+        {
+            name: "تنظيم وتدشين حفلات الافتتاح",
+            icon: Award,
+            image: grandOpening,
+            blurb: "تنظيم فاخر لحفلات الافتتاح وتدشين المشروعات والفروع بتجهيزات مسرحية وصوتية وإضاءة مبهرة.",
+        },
+        {
+            name: "تغطية الفعاليات والمعارض",
+            icon: Layers,
+            image: eventExhibitionCoverage,
+            blurb: "توثيق شامل وتغطية سينمائية وفوتوغرافية احترافية للمعارض والمؤتمرات والملتقيات التجارية.",
+        },
+        {
+            name: "تصوير جوي وإنتاج ريلز",
+            icon: Wand2,
+            image: droneEventCoverage,
+            blurb: "لقطات جوية درون 4K وإنتاج فيديوهات ريلز سريعة وخاطفة للمشاركة الفورية على السوشيال ميديا.",
         },
     ],
 } satisfies Record<string, Product[]>;

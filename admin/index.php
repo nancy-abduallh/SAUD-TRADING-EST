@@ -35,7 +35,7 @@ foreach (rows('SELECT rating, COUNT(*) n FROM testimonials GROUP BY rating') as 
 $activity = rows('SELECT l.*, a.username FROM activity_log l LEFT JOIN admins a ON a.id = l.admin_id ORDER BY l.id DESC LIMIT 8');
 
 // site-data sync check (expected counts from site-data)
-$expected = ['hero_slides' => 3, 'sectors' => 3, 'categories' => 13, 'products' => 57, 'site_values' => 6, 'digital_ecosystem' => 4,
+$expected = ['hero_slides' => 3, 'sectors' => 3, 'categories' => 16, 'products' => 66, 'site_values' => 6, 'digital_ecosystem' => 4,
     'comparison_rows' => 4, 'clients' => 11, 'countries' => 3, 'stats' => 4];
 $sync = [];
 foreach ($expected as $t => $n) $sync[$t] = [$n, (int)val("SELECT COUNT(*) FROM `$t`")];

@@ -191,6 +191,20 @@ return [
         'Confirm new password' => 'Confirm new password',
         'Save profile' => 'Save Profile',
         'Update password' => 'Update Password',
+
+        // Digital Sector categories & products
+        'تغطية إعلامية' => 'Media Coverage',
+        'مشاهير' => 'Celebrities & Influencers',
+        'حفلات افتتاح أو تغطية' => 'Opening Ceremonies & Events',
+        'تغطية صحفية وتلفزيونية' => 'Press & TV Coverage',
+        'بيانات وتقارير صحفية' => 'Press Releases & Reports',
+        'مؤتمرات صحفية وبث مباشر' => 'Press Conferences & Live Streaming',
+        'إعلانات كبار المؤثرين' => 'Top Tier Influencers',
+        'حضور وتنسيق الفعاليات' => 'Celebrity Event Attendance',
+        'إدارة حملات المشاهير' => 'Influencer Campaign Management',
+        'تنظيم وتدشين حفلات الافتتاح' => 'Grand Opening Ceremonies',
+        'تغطية الفعاليات والمعارض' => 'Exhibitions & Events Coverage',
+        'تصوير جوي وإنتاج ريلز' => 'Drone Footage & Fast Reels',
     ],
     'ar' => [
         // Navigation & Groups
@@ -383,5 +397,19 @@ return [
         'Confirm new password' => 'تأكيد كلمة المرور الجديدة',
         'Save profile' => 'حفظ الملف الشخصي',
         'Update password' => 'تحديث كلمة المرور',
+
+        // Digital Sector categories & products
+        'تغطية إعلامية' => 'تغطية إعلامية',
+        'مشاهير' => 'مشاهير',
+        'حفلات افتتاح أو تغطية' => 'حفلات افتتاح أو تغطية',
+        'تغطية صحفية وتلفزيونية' => 'تغطية صحفية وتلفزيونية',
+        'بيانات وتقارير صحفية' => 'بيانات وتقارير صحفية',
+        'مؤتمرات صحفية وبث مباشر' => 'مؤتمرات صحفية وبث مباشر',
+        'إعلانات كبار المؤثرين' => 'إعلانات كبار المؤثرين',
+        'حضور وتنسيق الفعاليات' => 'حضور وتنسيق الفعاليات',
+        'إدارة حملات المشاهير' => 'إدارة حملات المشاهير',
+        'تنظيم وتدشين حفلات الافتتاح' => 'تنظيم وتدشين حفلات الافتتاح',
+        'تغطية الفعاليات والمعارض' => 'تغطية الفعاليات والمعارض',
+        'تصوير جوي وإنتاج ريلز' => 'تصوير جوي وإنتاج ريلز',
     ],
 ];
