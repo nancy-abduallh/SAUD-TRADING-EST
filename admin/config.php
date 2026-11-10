@@ -1,10 +1,19 @@
 <?php
 $isLocalXampp = file_exists('C:/xampp');
-define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
-define('DB_PORT', (int)(getenv('DB_PORT') ?: ($isLocalXampp ? 3307 : 3306)));
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
-define('DB_NAME', getenv('DB_NAME') ?: 'saud_trading_db');
+if ($isLocalXampp) {
+    define('DB_HOST', '127.0.0.1');
+    define('DB_PORT', 3307);
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
+    define('DB_NAME', 'saud_trading_db');
+} else {
+    // Hostinger production database
+    define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+    define('DB_PORT', (int)(getenv('DB_PORT') ?: 3306));
+    define('DB_USER', getenv('DB_USER') ?: 'u665810851_saud_db');
+    define('DB_PASS', getenv('DB_PASS') !== false && getenv('DB_PASS') !== null ? getenv('DB_PASS') : 'Saudtrading_1');
+    define('DB_NAME', getenv('DB_NAME') ?: 'u665810851_saud_db');
+}
 define('UPLOAD_PATH', __DIR__ . '/uploads/');
 define('MAX_UPLOAD_BYTES', 5 * 1024 * 1024);
 define('SESSION_TIMEOUT', 1800); // 30 min idle

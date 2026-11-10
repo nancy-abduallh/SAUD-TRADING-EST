@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Do not rewrite /admin - let PHP handle admin requests directly
+  RewriteCond %{REQUEST_URI} ^/admin [NC]
+  RewriteRule ^ - [L]
+
+  # 2. If the request is for an existing file or directory, serve it directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 3. SPA fallback to index.html
+  RewriteRule ^index\.html$ - [L]
+  RewriteRule . /index.html [L]
+</IfModule>

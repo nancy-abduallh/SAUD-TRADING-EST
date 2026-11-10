@@ -1,6 +1,6 @@
 -- WARNING: importing this file DROPS and recreates every table (all data is reset).
-CREATE DATABASE IF NOT EXISTS saud_trading_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE saud_trading_db;
+-- CREATE DATABASE IF NOT EXISTS saud_trading_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- USE saud_trading_db;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS activity_log, contact_messages, contact_info, about_content, site_settings,
