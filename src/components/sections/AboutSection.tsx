@@ -9,6 +9,7 @@ import { Reveal } from "@/components/effects/Reveal";
 import { SectionHeading } from "@/components/effects/SectionHeading";
 import { Tilt } from "@/components/effects/Tilt";
 import { countries } from "@/lib/site-data";
+import { useSiteApi } from "@/lib/use-site-api";
 
 const IMG =
     "h-full w-full rounded-2xl object-cover shadow-[0_40px_70px_-30px_oklch(0.158_0.036_265.6/0.8)] ring-1 ring-gold/40 md:rounded-3xl";
@@ -18,6 +19,11 @@ const IMG =
  * md & up : the original 3D layered look (rotateY/rotateX + translateZ on each layer).
  */
 export function AboutSection() {
+    const { data } = useSiteApi();
+    const activeCountries = data?.countries?.length ? data.countries : countries;
+    const aboutTitle = data?.about?.title || "توريد محسوب. شراكات تدوم.";
+    const aboutDesc = data?.about?.description || "نبني جسوراً موثوقة بين المنتجين والأسواق، مع عناية دقيقة بالجودة والامتثال وسرعة الوصول.";
+
     return (
         <section id="about" className="relative isolate overflow-hidden bg-pearl py-20 md:py-32">
             <MovingBg src={hero} tone="light" motion="pan" />
@@ -29,12 +35,18 @@ export function AboutSection() {
                             eyebrow="سعود التجارية"
                             title={
                                 <>
-                                    توريد محسوب.
-                                    <br />
-                                    <span className="gradient-text-gold">شراكات تدوم.</span>
+                                    {aboutTitle.includes(".") ? (
+                                        <>
+                                            {aboutTitle.split(".")[0]}.
+                                            <br />
+                                            <span className="gradient-text-gold">{aboutTitle.split(".").slice(1).join(".")}</span>
+                                        </>
+                                    ) : (
+                                        <span className="gradient-text-gold">{aboutTitle}</span>
+                                    )}
                                 </>
                             }
-                            description="نبني جسوراً موثوقة بين المنتجين والأسواق، مع عناية دقيقة بالجودة والامتثال وسرعة الوصول."
+                            description={aboutDesc}
                         />
                     </Reveal>
                     <Reveal delay={120}>
@@ -46,7 +58,7 @@ export function AboutSection() {
                         </div>
                     </Reveal>
                     <div className="mt-8 grid grid-cols-3 gap-2.5 sm:gap-4 md:mt-10">
-                        {countries.map((country, i) => (
+                        {activeCountries.map((country, i) => (
                             <Reveal key={country.name} delay={200 + i * 100}>
                                 <Tilt max={10} className="h-full rounded-2xl">
                                     <div className="glass-light gold-border h-full rounded-2xl p-3 text-center sm:p-5">

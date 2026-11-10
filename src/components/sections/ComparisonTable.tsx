@@ -6,10 +6,14 @@ import { Reveal } from "@/components/effects/Reveal";
 import { SectionHeading } from "@/components/effects/SectionHeading";
 import { Tilt } from "@/components/effects/Tilt";
 import { comparisonRows } from "@/lib/site-data";
+import { useSiteApi } from "@/lib/use-site-api";
 
 const COLS = "md:grid-cols-[0.7fr_1fr_1.2fr]";
 
 export function ComparisonTable() {
+    const { data } = useSiteApi();
+    const activeRows = data?.comparisonRows?.length ? data.comparisonRows : comparisonRows;
+
     return (
         <section id="compare" className="relative isolate overflow-hidden bg-pearl py-24 md:py-32">
             <MovingBg src={plasticsSector} tone="light" />
@@ -34,7 +38,7 @@ export function ComparisonTable() {
                         <span className="gradient-text-gold text-base">حلول الذكاء الاصطناعي</span>
                     </div>
                     <div className="grid gap-4">
-                        {comparisonRows.map((row, i) => (
+                        {activeRows.map((row, i) => (
                             <Reveal key={row.label} delay={i * 110}>
                                 <div className={`grid gap-3 md:gap-4 ${COLS}`}>
                                     <div className="glass-light flex items-center rounded-2xl px-6 py-5 text-lg font-bold text-primary">{row.label}</div>

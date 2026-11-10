@@ -8,6 +8,7 @@ import { Reveal } from "@/components/effects/Reveal";
 import { Button } from "@/components/ui/button";
 import { countries, sectors, type SectorKey } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
+import { useSiteApi } from "@/lib/use-site-api";
 
 const CONTACT = { email: "", phone: "" };
 
@@ -60,7 +61,12 @@ function FooterColumn({ title, children }: { title: string; children: ReactNode 
 }
 
 export function Footer() {
-    const ctaHref = CONTACT.email ? `mailto:${CONTACT.email}` : "#contact";
+    const { data } = useSiteApi();
+    const contactEmail = data?.contact?.email || CONTACT.email;
+    const contactPhone = data?.contact?.phone || CONTACT.phone;
+    const contactAddress = data?.contact?.address || "الرياض، المملكة العربية السعودية";
+    const siteName = data?.settings?.site_name || "SAUD TRADING EST.";
+    const ctaHref = contactEmail ? `mailto:${contactEmail}` : "#contact";
 
     return (
         <footer id="contact" className="relative isolate overflow-hidden bg-ink pt-16 text-pearl md:pt-24">
@@ -140,21 +146,21 @@ export function Footer() {
                         <ul className="grid gap-4 text-sm text-pearl/65">
                             <li className="flex items-center gap-3">
                                 <MapPin size={16} className="shrink-0 text-gold" />
-                                الرياض، المملكة العربية السعودية
+                                {contactAddress}
                             </li>
-                            {CONTACT.email && (
+                            {contactEmail && (
                                 <li className="flex items-center gap-3">
                                     <Mail size={16} className="shrink-0 text-gold" />
-                                    <a href={`mailto:${CONTACT.email}`} className="font-mono hover:text-gold-soft">
-                                        {CONTACT.email}
+                                    <a href={`mailto:${contactEmail}`} className="font-mono hover:text-gold-soft">
+                                        {contactEmail}
                                     </a>
                                 </li>
                             )}
-                            {CONTACT.phone && (
+                            {contactPhone && (
                                 <li className="flex items-center gap-3">
                                     <Phone size={16} className="shrink-0 text-gold" />
-                                    <a dir="ltr" href={`tel:${CONTACT.phone}`} className="font-mono hover:text-gold-soft">
-                                        {CONTACT.phone}
+                                    <a dir="ltr" href={`tel:${contactPhone}`} className="font-mono hover:text-gold-soft">
+                                        {contactPhone}
                                     </a>
                                 </li>
                             )}
@@ -165,7 +171,7 @@ export function Footer() {
                 <div className="mt-10 flex items-center justify-between gap-4 border-t border-pearl/10 py-6 md:mt-16 md:py-8">
                     {/* dir="ltr" keeps the English line in the right word order inside the RTL page */}
                     <p dir="ltr" className="text-right font-mono text-xs leading-relaxed text-pearl/45">
-                        © 2026 SAUD TRADING EST. — Your Success, Our Commitment
+                        © 2026 {siteName} — Your Success, Our Commitment
                     </p>
                     <a
                         href="#top"

@@ -1,4 +1,4 @@
-import { Bot } from "lucide-react";
+import { BarChart3, Bot, Target, Zap, type LucideIcon } from "lucide-react";
 
 import heroGlobe from "@/assets/hero-globe.jpg";
 import { MovingBg } from "@/components/effects/MovingBg";
@@ -6,6 +6,14 @@ import { Reveal } from "@/components/effects/Reveal";
 import { SectionHeading } from "@/components/effects/SectionHeading";
 import { Tilt } from "@/components/effects/Tilt";
 import { digitalEcosystem } from "@/lib/site-data";
+import { useSiteApi } from "@/lib/use-site-api";
+
+const ecoIconMap: Record<string, LucideIcon> = {
+    Target,
+    Bot,
+    Zap,
+    BarChart3,
+};
 
 const FACES = ["front", "back", "right", "left", "top", "bottom"] as const;
 
@@ -26,6 +34,9 @@ function AiCube() {
 }
 
 export function DigitalEcosystem() {
+    const { data } = useSiteApi();
+    const activeEcosystem = data?.digitalEcosystem?.length ? data.digitalEcosystem : digitalEcosystem;
+
     return (
         <section id="digital" className="relative isolate overflow-hidden bg-navy py-24 text-pearl md:py-32">
             <MovingBg src={heroGlobe} tone="dark" imageOpacity={0.6} />
@@ -52,8 +63,10 @@ export function DigitalEcosystem() {
                 <div className="relative mt-20 pt-7">
                     <div className="absolute inset-x-[10%] top-7 hidden h-px bg-linear-to-r from-transparent via-gold/70 to-transparent lg:block" />
                     <div className="grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
-                        {digitalEcosystem.map((item, i) => {
-                            const Icon = item.icon;
+                        {activeEcosystem.map((item, i) => {
+                            const Icon = typeof item.icon === "function"
+                                ? item.icon
+                                : (ecoIconMap[item.icon as string] || digitalEcosystem[i % digitalEcosystem.length]?.icon || Bot);
                             return (
                                 <Reveal key={item.title} delay={i * 120} className="h-full">
                                     <Tilt max={9} className="h-full rounded-2xl">

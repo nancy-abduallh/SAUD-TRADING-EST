@@ -70,6 +70,7 @@ try {
             }
             $strings = array_values(array_filter($data, 'is_string'));
             log_activity("$verb {$m['singular']}", (string)($strings[0] ?? '#' . $id));
+            clear_site_cache();
             json_out(['ok' => true, 'id' => $id, 'message' => $m['singular'] . ' saved']);
         }
 
@@ -78,6 +79,7 @@ try {
             $id = (int)($_POST['id'] ?? 0);
             run("DELETE FROM `{$m['table']}` WHERE id = ?", [$id]);
             log_activity("Deleted {$m['singular']}", '#' . $id);
+            clear_site_cache();
             json_out(['ok' => true, 'message' => $m['singular'] . ' deleted']);
         }
 
@@ -89,6 +91,7 @@ try {
             run("UPDATE `{$m['table']}` SET `$c` = 1 - `$c` WHERE id = ?", [$id]);
             $new = (int)val("SELECT `$c` FROM `{$m['table']}` WHERE id = ?", [$id]);
             log_activity($new ? "Enabled {$m['singular']}" : "Disabled {$m['singular']}", '#' . $id);
+            clear_site_cache();
             json_out(['ok' => true, 'value' => $new]);
         }
 
@@ -98,6 +101,7 @@ try {
             $ids = array_values(array_filter(array_map('intval', explode(',', (string)($_POST['ids'] ?? '')))));
             foreach ($ids as $i => $id) run("UPDATE `{$m['table']}` SET sort_order = ? WHERE id = ?", [$i + 1, $id]);
             log_activity("Reordered {$m['title']}");
+            clear_site_cache();
             json_out(['ok' => true]);
         }
 
@@ -131,6 +135,7 @@ try {
                 run($sql, array_values($data));
             }
             log_activity('Updated settings', $g['title']);
+            clear_site_cache();
             json_out(['ok' => true, 'message' => $g['title'] . ' saved']);
         }
 

@@ -5,6 +5,7 @@ import { MovingBg } from "@/components/effects/MovingBg";
 import { Reveal } from "@/components/effects/Reveal";
 import { SectionHeading } from "@/components/effects/SectionHeading";
 import { clients } from "@/lib/client-data";
+import { useSiteApi } from "@/lib/use-site-api";
 
 /** Small gold divider (line — diamond — line) shown under the heading. */
 function GoldDivider() {
@@ -32,6 +33,9 @@ function motionVars(index: number): CSSProperties {
 }
 
 export function ClientsMarquee() {
+    const { data } = useSiteApi();
+    const activeClients = data?.clients?.length ? data.clients : clients;
+
     return (
         <section id="clients" className="relative isolate overflow-hidden bg-ink py-24 text-pearl md:py-28">
             <MovingBg src={heroSkyline} tone="dark" motion="pan" imageOpacity={0.5} />
@@ -56,7 +60,7 @@ export function ClientsMarquee() {
                 {/* Logo grid: 2 cols on mobile, 3 on tablet, 4 on desktop.
                     flex-wrap + justify-center keeps a short last row centered (4 / 4 / 3). */}
                 <ul dir="ltr" className="flex flex-wrap justify-center gap-y-6 md:gap-y-10">
-                    {clients.map((client, index) => (
+                    {activeClients.map((client, index) => (
                         <li key={client.name} className="flex w-1/2 justify-center md:w-1/3 lg:w-1/4">
                             <Reveal delay={index * 60} y={20} className="w-full">
                                 {/* 1) floating motion (pauses while hovered) */}

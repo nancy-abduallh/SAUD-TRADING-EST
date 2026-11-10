@@ -7,6 +7,7 @@ import heroPort from "@/assets/hero-port.jpg";
 import heroSkyline from "@/assets/hero-skyline.jpg";
 import heroGlobe from "@/assets/hero-globe.jpg";
 import { Button } from "@/components/ui/button";
+import { useSiteApi } from "@/lib/use-site-api";
 
 type Slide = {
     image: string;
@@ -15,6 +16,8 @@ type Slide = {
     eyebrow: string;
     heading: [string, string];
     paragraph: string;
+    ctaText?: string;
+    ctaLink?: string;
 };
 
 const slides: Slide[] = [
@@ -48,6 +51,20 @@ const slides: Slide[] = [
 ];
 
 export function HeroSlider() {
+    const { data } = useSiteApi();
+    const activeSlides: Slide[] = data?.heroSlides?.length
+        ? data.heroSlides.map((s: any, i: number) => ({
+            image: s.image || slides[i % slides.length].image,
+            imagePosition: "center",
+            alt: s.title || slides[i % slides.length].alt,
+            eyebrow: s.subtitle || slides[i % slides.length].eyebrow,
+            heading: [s.title || slides[i % slides.length].heading[0], ""] as [string, string],
+            paragraph: s.description || slides[i % slides.length].paragraph,
+            ctaText: s.ctaText,
+            ctaLink: s.ctaLink,
+        }))
+        : slides;
+
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, direction: "rtl" }, [
         Autoplay({ delay: 6500, stopOnInteraction: false, stopOnMouseEnter: true }),
     ]);
@@ -68,8 +85,8 @@ export function HeroSlider() {
         <header id="top" className="relative min-h-[92svh] overflow-hidden">
             <div className="absolute inset-0 overflow-hidden" ref={emblaRef}>
                 <div className="flex h-full">
-                    {slides.map((slide, index) => (
-                        <div key={slide.alt} className="relative min-w-0 flex-[0_0_100%]">
+                    {activeSlides.map((slide, index) => (
+                        <div key={slide.alt + index} className="relative min-w-0 flex-[0_0_100%]">
                             <img
                                 src={slide.image}
                                 width={1920}
@@ -89,9 +106,9 @@ export function HeroSlider() {
 
             <div className="relative z-10 flex min-h-[92svh] items-center">
                 <div className="mx-auto grid w-full max-w-7xl px-5 pb-48 pt-32 md:px-8 md:pb-52">
-                    {slides.map((slide, index) => (
+                    {activeSlides.map((slide, index) => (
                         <div
-                            key={slide.alt}
+                            key={slide.alt + index}
                             className={`col-start-1 row-start-1 max-w-3xl transition-opacity duration-700 ${selected === index ? "reveal-up opacity-100" : "pointer-events-none opacity-0"
                                 }`}
                             aria-hidden={selected !== index}
@@ -102,14 +119,18 @@ export function HeroSlider() {
                             </div>
                             <h1 className="text-5xl font-bold leading-[1.15] text-pearl md:text-7xl xl:text-8xl">
                                 {slide.heading[0]}
-                                <br />
-                                <span className="text-gold">{slide.heading[1]}</span>
+                                {slide.heading[1] && (
+                                    <>
+                                        <br />
+                                        <span className="text-gold">{slide.heading[1]}</span>
+                                    </>
+                                )}
                             </h1>
                             <p className="mt-7 max-w-2xl text-lg leading-8 text-pearl/80 md:text-xl">{slide.paragraph}</p>
                             <div className="mt-9 flex flex-wrap gap-3">
                                 <Button variant="gold" size="lg" asChild>
-                                    <a href="#sectors">
-                                        استكشف القطاعات <ArrowLeft size={18} />
+                                    <a href={slide.ctaLink || "#sectors"}>
+                                        {slide.ctaText || "استكشف القطاعات"} <ArrowLeft size={18} />
                                     </a>
                                 </Button>
                                 <Button variant="glass" size="lg" asChild>
@@ -122,9 +143,9 @@ export function HeroSlider() {
             </div>
 
             <div className="absolute inset-x-0 bottom-24 z-20 flex items-center justify-center gap-2 md:bottom-32">
-                {slides.map((slide, index) => (
+                {activeSlides.map((slide, index) => (
                     <button
-                        key={slide.alt}
+                        key={slide.alt + index}
                         aria-label={`الشريحة ${index + 1}`}
                         onClick={() => emblaApi?.scrollTo(index)}
                         className={`h-1.5 rounded-full transition-all ${selected === index ? "w-8 bg-gold" : "w-1.5 bg-pearl/40 hover:bg-pearl/70"

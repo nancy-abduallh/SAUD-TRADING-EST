@@ -1,4 +1,4 @@
-import { Quote } from "lucide-react";
+import { Award, Handshake, Quote, ShieldCheck, Sparkles, TrendingUp, Users, type LucideIcon } from "lucide-react";
 
 import globeNetwork from "@/assets/globe-network.jpg";
 import { MovingBg } from "@/components/effects/MovingBg";
@@ -7,8 +7,22 @@ import { SectionHeading } from "@/components/effects/SectionHeading";
 import { Tilt } from "@/components/effects/Tilt";
 import { VisionCube } from "@/components/effects/VisionCube";
 import { values, visionStatement } from "@/lib/site-data";
+import { useSiteApi } from "@/lib/use-site-api";
+
+const valueIconMap: Record<string, LucideIcon> = {
+    Award,
+    ShieldCheck,
+    Sparkles,
+    TrendingUp,
+    Handshake,
+    Users,
+};
 
 export function VisionValues() {
+    const { data } = useSiteApi();
+    const activeVision = data?.visionStatement || visionStatement;
+    const activeValues = data?.values?.length ? data.values : values;
+
     return (
         <section id="vision" className="relative isolate overflow-hidden bg-sand py-24 md:py-32">
             <MovingBg src={globeNetwork} tone="light" motion="pan" imageOpacity={0.4} />
@@ -35,7 +49,7 @@ export function VisionValues() {
                                 <div className="depth-lg flex flex-1 items-center justify-center py-4">
                                     <VisionCube />
                                 </div>
-                                <p className="depth-md text-2xl font-medium leading-[2.6rem]">{visionStatement}</p>
+                                <p className="depth-md text-2xl font-medium leading-[2.6rem]">{activeVision}</p>
                                 <div className="depth-sm mt-10 flex items-center gap-4">
                                     <span className="h-px flex-1 bg-linear-to-l from-gold/70 to-transparent" />
                                     <span className="font-mono text-xs tracking-widest text-gold-soft">VISION 2030 READY</span>
@@ -45,8 +59,10 @@ export function VisionValues() {
                     </Reveal>
 
                     <div className="grid gap-5 sm:grid-cols-2">
-                        {values.map((value, i) => {
-                            const Icon = value.icon;
+                        {activeValues.map((value, i) => {
+                            const Icon = typeof value.icon === "function"
+                                ? value.icon
+                                : (valueIconMap[value.icon as string] || values[i % values.length]?.icon || Sparkles);
                             return (
                                 <Reveal key={value.title} delay={i * 90} className="h-full">
                                     <Tilt max={9} className="h-full rounded-2xl">

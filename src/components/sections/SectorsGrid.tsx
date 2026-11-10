@@ -7,6 +7,7 @@ import { SectionHeading } from "@/components/effects/SectionHeading";
 import { Tilt } from "@/components/effects/Tilt";
 import { Button } from "@/components/ui/button";
 import { sectors, type SectorKey } from "@/lib/site-data";
+import { useSiteApi } from "@/lib/use-site-api";
 
 const overlayBySector: Record<SectorKey, string> = {
     plastics: "from-ink/95 via-ink/40 to-transparent",
@@ -15,6 +16,10 @@ const overlayBySector: Record<SectorKey, string> = {
 };
 
 export function SectorsGrid({ onSelect }: { onSelect: (key: SectorKey) => void }) {
+    const { data } = useSiteApi();
+    const activeSectors = (data?.sectors && Object.keys(data.sectors).length ? data.sectors : sectors) as typeof sectors;
+    const sectorKeys = Object.keys(activeSectors) as SectorKey[];
+
     return (
         <section id="sectors" className="relative isolate overflow-hidden bg-pearl pb-24 pt-32 md:pb-32 md:pt-40">
             <MovingBg src={productCollection} tone="light" />
@@ -40,8 +45,8 @@ export function SectorsGrid({ onSelect }: { onSelect: (key: SectorKey) => void }
                 </Reveal>
 
                 <div className="mt-16 grid gap-7 md:grid-cols-3">
-                    {(Object.keys(sectors) as SectorKey[]).map((key, i) => {
-                        const sector = sectors[key];
+                    {sectorKeys.map((key, i) => {
+                        const sector = activeSectors[key] || sectors[key];
                         return (
                             <Reveal key={key} delay={i * 130} className={i === 1 ? "md:-translate-y-6" : ""}>
                                 <Tilt max={8} className="rounded-3xl">

@@ -18,6 +18,15 @@ define('UPLOAD_PATH', __DIR__ . '/uploads/');
 define('MAX_UPLOAD_BYTES', 5 * 1024 * 1024);
 define('SESSION_TIMEOUT', 1800); // 30 min idle
 
+function clear_site_cache(): void {
+    $cacheDir = __DIR__ . '/cache/';
+    if (is_dir($cacheDir)) {
+        foreach (glob($cacheDir . 'site-*.json') ?: [] as $f) {
+            @unlink($f);
+        }
+    }
+}
+
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // public_api.php sets NO_SESSION so the public site never waits on a login session lock

@@ -4,11 +4,15 @@ import { CountUp } from "@/components/effects/CountUp";
 import { Reveal } from "@/components/effects/Reveal";
 import { stats } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
+import { useSiteApi } from "@/lib/use-site-api";
 
 // One icon per stat, in the same order as `stats` in site-data.ts
 const ICONS: LucideIcon[] = [Globe, Package, Layers, Clock];
 
 export function StatsBar() {
+    const { data } = useSiteApi();
+    const activeStats: [string, string][] = data?.stats?.length ? data.stats : stats;
+
     return (
         <section id="supply" className="relative z-20 -mt-14 px-4 md:-mt-20 md:px-8">
             <Reveal className="mx-auto max-w-6xl">
@@ -18,7 +22,7 @@ export function StatsBar() {
                     <span className="pointer-events-none absolute -top-24 left-1/2 size-64 -translate-x-1/2 rounded-full bg-gold/15 blur-3xl" />
 
                     <div className="relative grid grid-cols-2 md:grid-cols-4">
-                        {stats.map(([value, label], i) => {
+                        {activeStats.map(([value, label], i) => {
                             const Icon = ICONS[i % ICONS.length] ?? Globe;
                             return (
                                 <div

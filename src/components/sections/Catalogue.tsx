@@ -11,6 +11,7 @@ import { ImageLightbox, type LightboxItem } from "@/components/ui/image-lightbox
 import { products } from "@/lib/product-data";
 import { sectors, type CategoryName, type Product, type SectorKey } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
+import { useSiteApi } from "@/lib/use-site-api";
 
 const skuPrefix: Record<SectorKey, string> = {
     food: "FD",
@@ -41,8 +42,11 @@ export function Catalogue({
     setCategory: (category: CategoryName) => void;
     onSectorChange: (key: SectorKey) => void;
 }) {
-    const sector = sectors[sectorKey];
-    const visibleProducts: Product[] = products[category] ?? [];
+    const { data } = useSiteApi();
+    const activeSectors = (data?.sectors && Object.keys(data.sectors).length ? data.sectors : sectors) as typeof sectors;
+    const sector = activeSectors[sectorKey] ?? sectors[sectorKey];
+    const activeProducts = (data?.products && Object.keys(data.products).length ? data.products : products) as Record<string, Product[]>;
+    const visibleProducts: Product[] = activeProducts[category] ?? [];
 
     // Image popup (lightbox) state: index into `gallery`, or null when closed.
     const [activeImage, setActiveImage] = useState<number | null>(null);
@@ -149,7 +153,8 @@ export function Catalogue({
 
                         <div key={category} className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
                             {visibleProducts.map((item, index) => {
-                                const Icon = item.icon;
+                                const FallbackIcon = sectorIcon[sectorKey] || PackageCheck;
+                                const Icon = typeof item.icon === "function" ? item.icon : FallbackIcon;
                                 return (
                                     <Reveal key={item.name} delay={index * 80} className="h-full">
                                         <Tilt max={10} className="h-full rounded-2xl">
