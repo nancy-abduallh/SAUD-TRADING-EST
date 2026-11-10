@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { countries, sectors, type SectorKey } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import { useSiteApi } from "@/lib/use-site-api";
+import { getWhatsAppUrl, isExternalUrl } from "@/lib/whatsapp";
 
 const CONTACT = { email: "", phone: "" };
 
@@ -66,15 +67,7 @@ function WhatsAppIcon({ size = 18, className = "" }: { size?: number; className?
 }
 
 function formatWhatsAppHref(input: string): string {
-    const trimmed = input.trim();
-    if (!trimmed) return "";
-    if (/^(https?:)?\/\//i.test(trimmed)) {
-        return trimmed;
-    }
-    const digits = trimmed.replace(/\D/g, "");
-    if (!digits) return "";
-    const phone = digits.startsWith("05") ? "966" + digits.slice(1) : digits;
-    return `https://wa.me/${phone}`;
+    return getWhatsAppUrl(input);
 }
 
 type SocialItem = {
@@ -169,7 +162,12 @@ export function Footer() {
     const contactPhone = data?.contact?.phone || CONTACT.phone;
     const contactAddress = data?.contact?.address || "الرياض، المملكة العربية السعودية";
     const siteName = data?.settings?.site_name || "SAUD TRADING EST.";
-    const ctaHref = contactEmail ? `mailto:${contactEmail}` : "#contact";
+    const whatsappRaw = data?.settings?.whatsapp || data?.contact?.phone || "";
+    const ctaHref = getWhatsAppUrl(
+        whatsappRaw,
+        "السلام عليكم ورحمة الله، أود الاستفسار عن خدمات وتوريدات مؤسسة سعود للتجارة."
+    );
+    const isCtaExternal = isExternalUrl(ctaHref);
     const socialLinks = buildSocialLinks(data?.settings);
 
     return (
@@ -190,7 +188,10 @@ export function Footer() {
                                 </p>
                             </div>
                             <Button variant="gold" size="lg" className="w-full sm:w-auto" asChild>
-                                <a href={ctaHref}>
+                                <a
+                                    href={ctaHref}
+                                    {...(isCtaExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                                >
                                     تواصل معنا <ArrowLeft size={18} />
                                 </a>
                             </Button>

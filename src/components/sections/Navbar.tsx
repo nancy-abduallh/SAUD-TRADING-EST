@@ -4,6 +4,8 @@ import { ArrowLeft, ChevronLeft, Menu, X } from "lucide-react";
 import logoMark from "@/assets/logo-mark.png";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useSiteApi } from "@/lib/use-site-api";
+import { getWhatsAppUrl, isExternalUrl } from "@/lib/whatsapp";
 
 const LINKS = [
     { href: "#sectors", label: "القطاعات" },
@@ -16,6 +18,14 @@ const LINKS = [
 export function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (open: boolean) => void }) {
     const [scrolled, setScrolled] = useState(false);
     const bar = useRef<HTMLSpanElement>(null);
+    const { data } = useSiteApi();
+
+    const whatsappRaw = data?.settings?.whatsapp || data?.contact?.phone || "";
+    const contactHref = getWhatsAppUrl(
+        whatsappRaw,
+        "السلام عليكم ورحمة الله، أود الاستفسار عن خدمات ومنتجات مؤسسة سعود للتجارة."
+    );
+    const isExternal = isExternalUrl(contactHref);
 
     useEffect(() => {
         const onScroll = () => {
@@ -79,7 +89,12 @@ export function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOp
                     <div className="hidden items-center gap-3 md:flex">
                         {/* <Button variant="glass">EN</Button> */}
                         <Button variant="gold" asChild>
-                            <a href="#contact">تواصل معنا</a>
+                            <a
+                                href={contactHref}
+                                {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                            >
+                                تواصل معنا
+                            </a>
                         </Button>
                     </div>
 
@@ -150,7 +165,12 @@ export function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOp
                 </ul>
 
                 <div className="shrink-0 border-t border-pearl/10 p-4">
-                    <a href="#contact" onClick={close} className="gradient-bg-gold flex h-12 items-center justify-center gap-2 rounded-xl font-semibold text-ink shadow-lg">
+                    <a
+                        href={contactHref}
+                        {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                        onClick={close}
+                        className="gradient-bg-gold flex h-12 items-center justify-center gap-2 rounded-xl font-semibold text-ink shadow-lg transition-transform active:scale-95"
+                    >
                         تواصل معنا <ArrowLeft size={16} />
                     </a>
                 </div>

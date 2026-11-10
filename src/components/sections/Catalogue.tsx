@@ -12,6 +12,7 @@ import { products } from "@/lib/product-data";
 import { sectors, type CategoryName, type Product, type SectorKey } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import { useSiteApi } from "@/lib/use-site-api";
+import { getWhatsAppUrl, isExternalUrl } from "@/lib/whatsapp";
 
 const skuPrefix: Record<SectorKey, string> = {
     food: "FD",
@@ -155,6 +156,12 @@ export function Catalogue({
                             {visibleProducts.map((item, index) => {
                                 const FallbackIcon = sectorIcon[sectorKey] || PackageCheck;
                                 const Icon = typeof item.icon === "function" ? item.icon : FallbackIcon;
+                                const whatsappRaw = data?.settings?.whatsapp || data?.contact?.phone || "";
+                                const itemWhatsAppHref = getWhatsAppUrl(
+                                    whatsappRaw,
+                                    `السلام عليكم ورحمة الله، أود الاستفسار وطلب عرض أسعار بخصوص منتج: ${item.name}`
+                                );
+                                const isItemExternal = isExternalUrl(itemWhatsAppHref);
                                 return (
                                     <Reveal key={item.name} delay={index * 80} className="h-full">
                                         <Tilt max={10} className="h-full rounded-2xl">
@@ -192,8 +199,13 @@ export function Catalogue({
                                                 </span>
                                                 <h4 className="depth-md mt-2 text-lg font-semibold">{item.name}</h4>
                                                 <p className="mt-2 text-sm leading-6 text-pearl/55">{item.blurb}</p>
-                                                <Button variant="ghost" className="depth-sm mt-4 px-0 text-gold-soft hover:bg-transparent hover:text-gold">
-                                                    تفاصيل المنتج <ArrowLeft size={15} />
+                                                <Button variant="ghost" asChild className="depth-sm mt-4 px-0 text-gold-soft hover:bg-transparent hover:text-gold">
+                                                    <a
+                                                        href={itemWhatsAppHref}
+                                                        {...(isItemExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                                                    >
+                                                        طلب عرض أسعار <ArrowLeft size={15} />
+                                                    </a>
                                                 </Button>
                                             </article>
                                         </Tilt>
