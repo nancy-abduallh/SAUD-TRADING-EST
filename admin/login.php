@@ -46,6 +46,39 @@ $langSwitchUrl = '?' . http_build_query($currentParams);
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/dashboard.css?v=<?= filemtime(__DIR__ . '/assets/css/dashboard.css') ?>">
+  <style>
+    .password-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .password-wrapper input {
+      padding-inline-end: 44px !important;
+    }
+    .password-toggle-btn {
+      position: absolute;
+      inset-inline-end: 8px;
+      background: transparent;
+      border: none;
+      padding: 6px;
+      margin: 0;
+      cursor: pointer;
+      color: #8c98a9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: color 0.18s ease, background-color 0.18s ease;
+    }
+    .password-toggle-btn:hover {
+      color: var(--navy, #0d2148);
+      background-color: rgba(13, 33, 72, 0.06);
+    }
+    .password-toggle-btn:focus-visible {
+      outline: 2px solid var(--gold, #b6873f);
+    }
+  </style>
 </head>
 <body class="login-body">
   <div class="bg-orbs"><span></span><span></span><span></span></div>
@@ -63,13 +96,43 @@ $langSwitchUrl = '?' . http_build_query($currentParams);
       <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
       <div class="field"><label for="u"><?= e(__('Username')) ?></label>
         <input id="u" name="username" autocomplete="username" required autofocus></div>
-      <div class="field"><label for="p"><?= e(__('Password')) ?></label>
-        <input id="p" name="password" type="password" autocomplete="current-password" required></div>
+      <div class="field">
+        <label for="p"><?= e(__('Password')) ?></label>
+        <div class="password-wrapper">
+          <input id="p" name="password" type="password" autocomplete="current-password" required>
+          <button type="button" id="togglePassword" class="password-toggle-btn" aria-label="<?= e(current_lang() === 'ar' ? 'إظهار / إخفاء كلمة المرور' : 'Show / hide password') ?>" title="<?= e(current_lang() === 'ar' ? 'إظهار / إخفاء كلمة المرور' : 'Show / hide password') ?>">
+            <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <svg class="eye-off-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+              <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+              <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+              <line x1="2" y1="2" x2="22" y2="22"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
       <div class="alert" id="clientErr" hidden><?= e(__('login_prompt_err')) ?></div>
       <button class="btn btn-primary block" type="submit"><?= e(__('Sign in')) ?></button>
     </form>
   </main>
   <script>
+    const toggleBtn = document.getElementById('togglePassword');
+    const pwdInput = document.getElementById('p');
+    if (toggleBtn && pwdInput) {
+      const eyeIcon = toggleBtn.querySelector('.eye-icon');
+      const eyeOffIcon = toggleBtn.querySelector('.eye-off-icon');
+      toggleBtn.addEventListener('click', function () {
+        const isPassword = pwdInput.type === 'password';
+        pwdInput.type = isPassword ? 'text' : 'password';
+        eyeIcon.style.display = isPassword ? 'none' : 'block';
+        eyeOffIcon.style.display = isPassword ? 'block' : 'none';
+        pwdInput.focus();
+      });
+    }
+
     document.getElementById('loginForm').addEventListener('submit', function (e) {
       if (!this.username.value.trim() || !this.password.value) {
         e.preventDefault();

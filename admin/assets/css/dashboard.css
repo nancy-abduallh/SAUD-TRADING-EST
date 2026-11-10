@@ -1484,3 +1484,36 @@ html[dir="rtl"] body,
         margin-left: 0;
     }
 }
+
+/* Password field toggle */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.password-wrapper input {
+    padding-inline-end: 44px !important;
+}
+.password-toggle-btn {
+    position: absolute;
+    inset-inline-end: 8px;
+    background: transparent;
+    border: none;
+    padding: 6px;
+    margin: 0;
+    cursor: pointer;
+    color: #8c98a9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: color 0.18s ease, background-color 0.18s ease;
+}
+.password-toggle-btn:hover {
+    color: var(--navy, #0d2148);
+    background-color: rgba(13, 33, 72, 0.06);
+}
+.password-toggle-btn:focus-visible {
+    outline: 2px solid var(--gold, #b6873f);
+}

@@ -294,6 +294,25 @@
         });
     }
 
+    /* ---------- password visibility toggle ---------- */
+    document.addEventListener('click', e => {
+        const btn = e.target.closest('.password-toggle-btn');
+        if (!btn) return;
+        const wrapper = btn.closest('.password-wrapper');
+        if (!wrapper) return;
+        const input = wrapper.querySelector('input');
+        if (!input) return;
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        const eye = btn.querySelector('.eye-icon');
+        const eyeOff = btn.querySelector('.eye-off-icon');
+        if (eye && eyeOff) {
+            eye.style.display = isPassword ? 'none' : 'block';
+            eyeOff.style.display = isPassword ? 'block' : 'none';
+        }
+        input.focus();
+    });
+
     icons();
     initCrud();
     initMessages();
