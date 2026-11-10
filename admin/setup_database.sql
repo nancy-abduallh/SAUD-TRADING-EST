@@ -329,5 +329,5 @@ INSERT INTO contact_info (id, phone, email, address, map_url, working_hours) VAL
 
 INSERT INTO site_settings (setting_key, setting_value) VALUES
 ('site_name','SAUD TRADING EST.'),('tagline',''),('facebook',''),('twitter',''),
-('linkedin',''),('instagram',''),('whatsapp','');
+('instagram',''),('tiktok',''),('linkedin',''),('whatsapp','');
 -- The admin user (admin / admin123) is created automatically on first visit to login.php.

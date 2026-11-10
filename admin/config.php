@@ -195,8 +195,9 @@ function settings_groups(): array {
             fld('tagline', 'Tagline'),
             fld('facebook', 'Facebook URL', 'url'),
             fld('twitter', 'X / Twitter URL', 'url'),
-            fld('linkedin', 'LinkedIn URL', 'url'),
             fld('instagram', 'Instagram URL', 'url'),
+            fld('tiktok', 'TikTok URL', 'url'),
+            fld('linkedin', 'LinkedIn URL', 'url'),
             fld('whatsapp', 'WhatsApp number / link'),
         ]],
     ];

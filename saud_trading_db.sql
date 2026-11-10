@@ -466,9 +466,10 @@ INSERT INTO `site_settings` (`id`, `setting_key`, `setting_value`) VALUES
 (2, 'tagline', ''),
 (3, 'facebook', ''),
 (4, 'twitter', ''),
-(5, 'linkedin', ''),
-(6, 'instagram', ''),
-(7, 'whatsapp', '');
+(5, 'instagram', ''),
+(6, 'tiktok', ''),
+(7, 'linkedin', ''),
+(8, 'whatsapp', '');
 
 -- --------------------------------------------------------
 

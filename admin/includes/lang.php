@@ -113,8 +113,9 @@ return [
         'Tagline' => 'Tagline',
         'Facebook URL' => 'Facebook URL',
         'X / Twitter URL' => 'X / Twitter URL',
-        'LinkedIn URL' => 'LinkedIn URL',
         'Instagram URL' => 'Instagram URL',
+        'TikTok URL' => 'TikTok URL',
+        'LinkedIn URL' => 'LinkedIn URL',
         'WhatsApp number / link' => 'WhatsApp Number / Link',
 
         'Title' => 'Title',
@@ -319,8 +320,9 @@ return [
         'Tagline' => 'الشعار اللفظي (الوصف التعريفي)',
         'Facebook URL' => 'رابط حساب فيسبوك',
         'X / Twitter URL' => 'رابط حساب تويتر (X)',
-        'LinkedIn URL' => 'رابط حساب لينكد إن',
         'Instagram URL' => 'رابط حساب إنستغرام',
+        'TikTok URL' => 'رابط حساب تيك توك',
+        'LinkedIn URL' => 'رابط حساب لينكد إن',
         'WhatsApp number / link' => 'رقم أو رابط الواتساب',
 
         'Title' => 'العنوان',
