@@ -51,7 +51,7 @@ export default defineConfig({
         client: { files: ["**/server/**"], specifiers: ["server-only"] },
       },
     }),
-    nitro({ preset: "cloudflare-module" }),
+    nitro({ preset: process.env.NITRO_PRESET || "node-server" }),
     viteReact(),
   ],
 });
