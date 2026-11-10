@@ -11,6 +11,7 @@ $langSwitchUrl = '?' . http_build_query($currentParams);
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
   <meta name="csrf-token" content="<?= e(csrf_token()) ?>">
   <title><?= e(__($pageTitle ?? 'Dashboard')) ?> · <?= e(__('saud_trading')) ?></title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">

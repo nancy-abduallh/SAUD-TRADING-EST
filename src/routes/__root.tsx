@@ -83,12 +83,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       meta: [
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "author", content: "سعود التجارية" },
+        { name: "author", content: "مؤسسة سعود للتجارة | SAUD TRADING EST." },
         { name: "theme-color", content: "#060c1c" },
+        { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+        { name: "google-site-verification", content: "GOOGLE_SITE_VERIFICATION_TOKEN" },
+        { property: "og:site_name", content: "مؤسسة سعود للتجارة | SAUD TRADING EST." },
+        { property: "og:locale", content: "ar_SA" },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },
       ],
       links: [
+        { rel: "canonical", href: "https://saud.ksaplatforms.com/" },
+        { rel: "alternate", href: "https://saud.ksaplatforms.com/", hrefLang: "ar" },
+        { rel: "alternate", href: "https://saud.ksaplatforms.com/", hrefLang: "x-default" },
+        { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
         {
           rel: "stylesheet",
           href: appCss,
@@ -132,10 +140,111 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 );
 
 function RootShell({ children }: { children: ReactNode }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://saud.ksaplatforms.com/#organization",
+        "name": "مؤسسة سعود للتجارة",
+        "alternateName": ["SAUD TRADING EST.", "سعود للتجارة"],
+        "url": "https://saud.ksaplatforms.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://saud.ksaplatforms.com/icon-512.png",
+          "width": 512,
+          "height": 512,
+        },
+        "image": "https://saud.ksaplatforms.com/icon-512.png",
+        "description":
+          "حلول سعودية موثوقة لتوريد المواد الغذائية واللدائن البلاستيكية الخام، وخدمات رقمية متكاملة مدعومة بالذكاء الاصطناعي.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "الرياض",
+          "addressCountry": "SA",
+        },
+        "areaServed": [
+          { "@type": "Country", "name": "Saudi Arabia" },
+          { "@type": "Country", "name": "Egypt" },
+          { "@type": "Country", "name": "United Arab Emirates" },
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "sales",
+          "availableLanguage": ["Arabic", "English"],
+        },
+        "knowsAbout": [
+          "Food Commodities Supply",
+          "Plastic Polymers & Industrial Packaging",
+          "AI-Powered Digital Services & Media Production",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://saud.ksaplatforms.com/#website",
+        "url": "https://saud.ksaplatforms.com/",
+        "name": "سعود للتجارة | تجارة عالمية برؤية سعودية",
+        "description":
+          "حلول سعودية رائدة وموثوقة لتوريد المواد الغذائية والبلاستيكية والخدمات الرقمية المتكاملة بالذكاء الاصطناعي.",
+        "inLanguage": "ar",
+        "publisher": {
+          "@id": "https://saud.ksaplatforms.com/#organization",
+        },
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://saud.ksaplatforms.com/#webpage",
+        "url": "https://saud.ksaplatforms.com/",
+        "name": "سعود التجارية | تجارة عالمية وتوريد السلع الغذائية والمواد البلاستيكية والحلول الرقمية",
+        "isPartOf": {
+          "@id": "https://saud.ksaplatforms.com/#website",
+        },
+        "about": {
+          "@id": "https://saud.ksaplatforms.com/#organization",
+        },
+        "description":
+          "حلول سعودية موثوقة لتوريد المواد الغذائية واللدائن البلاستيكية الخام، وخدمات رقمية متكاملة مدعومة بالذكاء الاصطناعي.",
+        "inLanguage": "ar",
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://saud.ksaplatforms.com/#sectors",
+        "name": "قطاعات الأعمال الرئيسية في مؤسسة سعود للتجارة",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "قطاع اللدائن والبلاستيك",
+            "description":
+              "مواد خام موثقة المواصفات للصناعات التحويلية وحلول التعبئة والتغليف.",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "قطاع المواد الغذائية",
+            "description":
+              "سلع غذائية مختارة بعناية من مصادر دولية معتمدة تشمل الأرز، الحبوب، الزيوت النباتية، البقوليات والمكسرات.",
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "قطاع الحلول الرقمية والإنتاج الإبداعي",
+            "description":
+              "منظومة رقمية متكاملة مدعومة بالذكاء الاصطناعي لتطوير المواقع والتسويق الرقمي والتغطيات الإعلامية.",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <html lang="ar" dir="rtl">
       <head>
         <HeadContent />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body>
         {children}

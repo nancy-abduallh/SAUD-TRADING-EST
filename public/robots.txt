@@ -1,0 +1,18 @@
+# Robots.txt for Saud Trading Establishment
+# Website: https://saud.ksaplatforms.com/
+
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /favicon.ico
+Allow: /apple-touch-icon.png
+Allow: /icon-192.png
+Allow: /icon-512.png
+
+# Disallow admin dashboard and internal backend endpoints
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /hbuilds/
+
+# XML Sitemap
+Sitemap: https://saud.ksaplatforms.com/sitemap.xml

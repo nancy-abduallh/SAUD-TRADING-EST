@@ -6,12 +6,23 @@
   RewriteCond %{REQUEST_URI} ^/admin [NC]
   RewriteRule ^ - [L]
 
-  # 2. If the request is for an existing file or directory, serve it directly
+  # 2. Directly serve robots.txt and sitemap.xml without routing to SPA
+  RewriteRule ^(robots\.txt|sitemap\.xml)$ - [L]
+
+  # 3. If the request is for an existing file or directory, serve it directly
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # 3. SPA fallback to index.html
+  # 4. SPA fallback to index.html
   RewriteRule ^index\.html$ - [L]
   RewriteRule . /index.html [L]
+</IfModule>
+
+# MIME Types and Charset for SEO assets
+<IfModule mod_mime.c>
+  AddType application/xml .xml
+  AddType text/plain .txt
+  AddCharset UTF-8 .xml
+  AddCharset UTF-8 .txt
 </IfModule>

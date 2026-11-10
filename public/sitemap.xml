@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://saud.ksaplatforms.com/</loc>
+    <lastmod>2026-11-10T18:00:00+03:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://saud.ksaplatforms.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://saud.ksaplatforms.com/"/>
+    <image:image>
+      <image:loc>https://saud.ksaplatforms.com/icon-512.png</image:loc>
+      <image:title>شعار مؤسسة سعود للتجارة</image:title>
+      <image:caption>سعود للتجارة - حلول موثوقة لتوريد المواد الغذائية والبلاستيكية والخدمات الرقمية</image:caption>
+    </image:image>
+  </url>
+</urlset>

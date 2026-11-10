@@ -27,19 +27,39 @@ const ClientsMarquee = lazy(() =>
 export const Route = createFileRoute("/")({
     head: () => ({
         meta: [
-            { title: "سعود التجارية | تجارة عالمية برؤية سعودية" },
+            { title: "سعود التجارية | تجارة عالمية وتوريد السلع الغذائية والمواد البلاستيكية والحلول الرقمية" },
             {
                 name: "description",
                 content:
-                    "حلول سعودية موثوقة لتوريد المواد الغذائية والبلاستيكية، وخدمات رقمية متكاملة مدعومة بالذكاء الاصطناعي.",
+                    "مؤسسة سعود للتجارة - حلول سعودية رائدة وموثوقة لتوريد المواد الغذائية واللدائن البلاستيكية الخام، وخدمات رقمية وإعلامية متكاملة مدعومة بالذكاء الاصطناعي لمواكبة رؤية 2030.",
             },
-            { property: "og:title", content: "سعود التجارية | تجارة عالمية برؤية سعودية" },
+            {
+                name: "keywords",
+                content:
+                    "سعود التجارية, مؤسسة سعود للتجارة, توريد مواد غذائية, بوليمرات بلاستيكية, تجارة عالمية السعودية, حلول رقمية ذكاء اصطناعي, سلاسل إمداد, أرز بسمتي, زيوت نباتية, حبيبات بلاستيك, SAUD TRADING",
+            },
+            { property: "og:title", content: "سعود التجارية | تجارة عالمية وتوريد السلع الغذائية والمواد البلاستيكية والحلول الرقمية" },
             {
                 property: "og:description",
-                content: "اكتشف قطاعات سعود التجارية: الغذاء، البلاستيك، والحلول الرقمية المدعومة بالذكاء الاصطناعي.",
+                content: "حلول سعودية رائدة وموثوقة لتوريد المواد الغذائية واللدائن البلاستيكية والخدمات الرقمية المتكاملة بالذكاء الاصطناعي.",
             },
+            { property: "og:url", content: "https://saud.ksaplatforms.com/" },
+            { property: "og:image", content: "https://saud.ksaplatforms.com/icon-512.png" },
+            { property: "og:image:width", content: "512" },
+            { property: "og:image:height", content: "512" },
+            { property: "og:image:alt", content: "شعار مؤسسة سعود للتجارة" },
             { property: "og:type", content: "website" },
+            { property: "og:locale", content: "ar_SA" },
             { name: "twitter:card", content: "summary_large_image" },
+            { name: "twitter:title", content: "سعود التجارية | تجارة عالمية وتوريد المواد الغذائية والبلاستيكية" },
+            {
+                name: "twitter:description",
+                content: "حلول سعودية رائدة وموثوقة لتوريد السلع الغذائية والمواد البلاستيكية والحلول الرقمية.",
+            },
+            { name: "twitter:image", content: "https://saud.ksaplatforms.com/icon-512.png" },
+        ],
+        links: [
+            { rel: "canonical", href: "https://saud.ksaplatforms.com/" },
         ],
     }),
     component: Index,

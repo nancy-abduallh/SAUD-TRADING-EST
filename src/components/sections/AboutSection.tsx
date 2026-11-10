@@ -81,15 +81,15 @@ export function AboutSection() {
                         <div className="p3d absolute inset-0 md:[transform:rotateY(-16deg)_rotateX(7deg)]">
                             {/* Dubai */}
                             <div className="absolute right-0 top-0 h-44 w-[74%] md:h-72 md:w-[78%]">
-                                <img src={dubai} alt="دبي" loading="lazy" className={`${IMG} anim-float`} />
+                                <img src={dubai} alt="سعود التجارية - شبكة التوريد والشراكات في دبي والإمارات" loading="lazy" className={`${IMG} anim-float`} />
                             </div>
                             {/* Egypt */}
                             <div className="absolute left-0 top-[7.5rem] h-44 w-[58%] md:top-44 md:h-64 md:w-[62%] md:[transform:translateZ(70px)]">
-                                <img src={egypt} alt="مصر" loading="lazy" className={`${IMG} anim-float`} style={{ animationDelay: "-2.5s" }} />
+                                <img src={egypt} alt="سعود التجارية - عمليات الاستيراد والتصدير في مصر" loading="lazy" className={`${IMG} anim-float`} style={{ animationDelay: "-2.5s" }} />
                             </div>
                             {/* Saudi Arabia */}
                             <div className="absolute bottom-16 right-4 h-44 w-[56%] md:bottom-0 md:right-8 md:h-56 md:w-[58%] md:[transform:translateZ(140px)]">
-                                <img src={saudi} alt="السعودية" loading="lazy" className={`${IMG} anim-float`} style={{ animationDelay: "-5s" }} />
+                                <img src={saudi} alt="سعود التجارية - المقر الرئيسي وسلاسل الإمداد في المملكة العربية السعودية" loading="lazy" className={`${IMG} anim-float`} style={{ animationDelay: "-5s" }} />
                             </div>
                             {/* Location chip: centred under the collage on mobile, floating on desktop */}
                             <div
