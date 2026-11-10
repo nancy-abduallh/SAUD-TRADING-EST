@@ -51,7 +51,7 @@ export default defineConfig({
         client: { files: ["**/server/**"], specifiers: ["server-only"] },
       },
     }),
-    nitro({ preset: process.env.NITRO_PRESET || "node-server" }),
+    nitro({ preset: (process.env["NITRO_PRESET"] as any) || "node-server" }),
     viteReact(),
   ],
 });
