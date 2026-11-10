@@ -5,11 +5,11 @@ function getApiEndpoint(): string {
     if (envUrl) return envUrl;
 
     if (typeof window !== "undefined") {
-        const { protocol, hostname, pathname } = window.location;
+        const { pathname } = window.location;
         if (pathname.startsWith("/SAUD-TRADING-EST/")) {
             return "/SAUD-TRADING-EST/admin/public_api.php";
         }
-        return `${protocol}//${hostname}/SAUD-TRADING-EST/admin/public_api.php`;
+        return "/admin/public_api.php";
     }
 
     return "http://localhost/SAUD-TRADING-EST/admin/public_api.php";
