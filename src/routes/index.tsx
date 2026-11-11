@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { lazy, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 
 import { Navbar } from "@/components/sections/Navbar";
 import { HeroSlider } from "@/components/sections/HeroSlider";
@@ -12,12 +12,10 @@ import { BrandsSection } from "@/components/sections/BrandsSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { RiyadhLocations } from "@/components/sections/RiyadhLocations";
 import { Footer } from "@/components/sections/Footer";
-import { LazySection } from "@/components/effects/LazySection";
 import { sectors, type CategoryName, type SectorKey } from "@/lib/site-data";
 
 // ── Code-split the two heaviest sections ────────────────────────────────────
 // Catalogue pulls in ~57 product images; ClientsMarquee pulls in ~11 logos.
-// Their JS chunks only download when the section enters the viewport.
 const Catalogue = lazy(() =>
     import("@/components/sections/Catalogue").then((m) => ({ default: m.Catalogue })),
 );
@@ -63,18 +61,23 @@ export const Route = createFileRoute("/")({
             { rel: "canonical", href: "https://saud.ksaplatforms.com/" },
         ],
     }),
-    component: Index,
+    component: IndexPage,
 });
 
-function Index() {
+function IndexPage() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [sectorKey, setSectorKey] = useState<SectorKey>("food");
-    const [category, setCategory] = useState<CategoryName>("الأرز والحبوب");
+    const [category, setCategory] = useState<CategoryName>("زيوت طعام");
 
     const selectSector = (key: SectorKey) => {
         setSectorKey(key);
         setCategory(sectors[key].categories[0] as CategoryName);
-        requestAnimationFrame(() => document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" }));
+        const el = document.getElementById("catalogue");
+        if (el) {
+            const headerOffset = window.innerWidth >= 768 ? 80 : 68;
+            const top = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+            window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+        }
     };
 
     const changeSector = (key: SectorKey) => {
@@ -82,42 +85,57 @@ function Index() {
         setCategory(sectors[key].categories[0] as CategoryName);
     };
 
+    // Smoothly scroll to initial hash target if present in URL on load
+    useEffect(() => {
+        if (typeof window !== "undefined" && window.location.hash) {
+            const hash = window.location.hash.replace(/^#/, "");
+            if (hash) {
+                const timer = setTimeout(() => {
+                    const el = document.getElementById(hash);
+                    if (el) {
+                        const headerOffset = window.innerWidth >= 768 ? 80 : 68;
+                        const top = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+                        window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+                    }
+                }, 150);
+                return () => clearTimeout(timer);
+            }
+        }
+    }, []);
+
     return (
-        <main className="min-h-screen overflow-x-hidden bg-pearl text-ink" dir="rtl">
-            {/* ── Above the fold — rendered eagerly during SSR ── */}
+        <main className="relative min-h-screen overflow-x-hidden bg-pearl text-ink" dir="rtl">
+            {/* Top Anchor */}
+            <div id="top" className="absolute top-0 start-0 pointer-events-none" />
+
             <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
             <HeroSlider />
             <StatsBar />
 
-            {/* ── Below the fold — deferred until approaching viewport ── */}
-            <LazySection minHeight="700px" id="sectors">
-                <SectorsGrid onSelect={selectSector} />
-            </LazySection>
-            <LazySection minHeight="800px" id="catalogue">
-                <Catalogue sectorKey={sectorKey} category={category} setCategory={setCategory} onSectorChange={changeSector} />
-            </LazySection>
-            <LazySection minHeight="600px" id="vision">
-                <VisionValues />
-            </LazySection>
-            <LazySection minHeight="600px" id="digital">
-                <DigitalEcosystem />
-            </LazySection>
-            <LazySection minHeight="500px" id="compare">
-                <ComparisonTable />
-            </LazySection>
-            <LazySection minHeight="500px" id="clients">
+            {/* Sections */}
+            <SectorsGrid onSelect={selectSector} />
+
+            <Suspense fallback={<div id="catalogue" className="min-h-[500px] bg-ink" />}>
+                <Catalogue
+                    sectorKey={sectorKey}
+                    category={category}
+                    setCategory={setCategory}
+                    onSectorChange={changeSector}
+                />
+            </Suspense>
+
+            <VisionValues />
+            <DigitalEcosystem />
+            <ComparisonTable />
+
+            <Suspense fallback={<div id="clients" className="min-h-[400px] bg-ink" />}>
                 <ClientsMarquee />
-            </LazySection>
+            </Suspense>
+
             <BrandsSection />
-            <LazySection minHeight="500px" id="about">
-                <AboutSection />
-            </LazySection>
-                        <LazySection minHeight="550px" id="locations">
-                <RiyadhLocations />
-            </LazySection>
-            <LazySection minHeight="400px" id="contact">
-                <Footer />
-            </LazySection>
+            <AboutSection />
+            <RiyadhLocations />
+            <Footer />
         </main>
     );
 }

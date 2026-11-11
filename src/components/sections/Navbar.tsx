@@ -55,7 +55,50 @@ export function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOp
         };
     }, [menuOpen, setMenuOpen]);
 
-    const close = () => setMenuOpen(false);
+    const close = () => {
+        document.body.style.overflow = "";
+        setMenuOpen(false);
+    };
+
+    const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        if (!href.startsWith("#")) return;
+        e.preventDefault();
+
+        // Release scroll lock immediately and close drawer
+        document.body.style.overflow = "";
+        setMenuOpen(false);
+
+        const targetId = href.replace(/^#/, "");
+
+        if (targetId === "top") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            if (window.location.hash) {
+                history.pushState(null, "", window.location.pathname);
+            }
+            return;
+        }
+
+        const executeScroll = () => {
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+                const headerOffset = window.innerWidth >= 768 ? 80 : 68;
+                const elementPosition = targetEl.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: Math.max(0, offsetPosition),
+                    behavior: "smooth",
+                });
+                history.pushState(null, "", href);
+            } else {
+                window.location.hash = href;
+            }
+        };
+
+        executeScroll();
+        // Fallback tick for mobile menu slide-out completion
+        setTimeout(executeScroll, 60);
+    };
 
     return (
         <>
@@ -69,7 +112,11 @@ export function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOp
             >
                 <div className={cn("mx-auto flex max-w-7xl items-center justify-between px-4 transition-all duration-500 sm:px-5 md:px-8", scrolled ? "h-14 md:h-16" : "h-16 md:h-20")}>
                     <div className="flex items-center gap-12">
-                        <a href="#top" className="flex items-center gap-2.5 md:gap-3">
+                        <a
+                            href="#top"
+                            onClick={(e) => handleNavClick(e, "#top")}
+                            className="flex items-center gap-2.5 md:gap-3 cursor-pointer"
+                        >
                             <img src={logoMark} alt="شعار سعود التجارية" className="h-9 w-auto drop-shadow-sm md:h-10" />
                             <span className="text-xl font-bold text-pearl md:text-2xl">
                                 سعود التجارية<span className="gradient-text-gold">.</span>
@@ -80,7 +127,8 @@ export function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOp
                                 <a
                                     key={link.href}
                                     href={link.href}
-                                    className="relative py-2 text-pearl/85 transition-colors hover:text-gold-soft after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-center after:scale-x-0 after:bg-gold after:transition-transform after:duration-300 hover:after:scale-x-100"
+                                    onClick={(e) => handleNavClick(e, link.href)}
+                                    className="relative py-2 text-pearl/85 transition-colors hover:text-gold-soft after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-center after:scale-x-0 after:bg-gold after:transition-transform after:duration-300 hover:after:scale-x-100 cursor-pointer"
                                 >
                                     {link.label}
                                 </a>
@@ -88,7 +136,6 @@ export function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOp
                         </div>
                     </div>
                     <div className="hidden items-center gap-3 md:flex">
-                        {/* <Button variant="glass">EN</Button> */}
                         <Button variant="gold" asChild>
                             <a
                                 href={contactHref}
@@ -115,7 +162,6 @@ export function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOp
                 <span ref={bar} aria-hidden className="gradient-bg-gold absolute inset-x-0 bottom-0 h-0.5 origin-right scale-x-0" />
             </nav>
 
-
             <div
                 aria-hidden
                 onClick={close}
@@ -139,7 +185,11 @@ export function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOp
                 <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-gold to-transparent" />
 
                 <div className="flex h-16 shrink-0 items-center justify-between border-b border-pearl/10 px-4">
-                    <a href="#top" onClick={close} className="flex items-center gap-2.5">
+                    <a
+                        href="#top"
+                        onClick={(e) => handleNavClick(e, "#top")}
+                        className="flex items-center gap-2.5 cursor-pointer"
+                    >
                         <img src={logoMark} alt="" className="h-9 w-auto" />
                         <span className="text-lg font-bold">
                             سعود التجارية<span className="gradient-text-gold">.</span>
@@ -155,8 +205,8 @@ export function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOp
                         <li key={link.href}>
                             <a
                                 href={link.href}
-                                onClick={close}
-                                className="group flex items-center justify-between py-4 text-[15px] font-medium text-pearl/90 transition-colors active:text-gold-soft"
+                                onClick={(e) => handleNavClick(e, link.href)}
+                                className="group flex items-center justify-between py-4 text-[15px] font-medium text-pearl/90 transition-colors active:text-gold-soft cursor-pointer"
                             >
                                 {link.label}
                                 <ChevronLeft size={16} className="text-pearl/40 transition-all group-hover:-translate-x-1 group-hover:text-gold group-active:text-gold" />
