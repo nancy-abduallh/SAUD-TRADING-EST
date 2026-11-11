@@ -6,7 +6,7 @@ import logoMark from "@/assets/logo-mark.png";
 import { MovingBg } from "@/components/effects/MovingBg";
 import { Reveal } from "@/components/effects/Reveal";
 import { Button } from "@/components/ui/button";
-import { countries, sectors, type SectorKey } from "@/lib/site-data";
+import { countries, defaultRiyadhLocations, sectors, type RiyadhLocation, type SectorKey } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import { useSiteApi } from "@/lib/use-site-api";
 import { getWhatsAppUrl, isExternalUrl } from "@/lib/whatsapp";
@@ -19,6 +19,7 @@ const QUICK_LINKS = [
     { href: "#vision", label: "رؤيتنا" },
     { href: "#clients", label: "عملاؤنا" },
     { href: "#about", label: "عن الشركة" },
+    { href: "#locations", label: "مراكز الرياض" },
 ];
 
 function XIcon({ size = 18, className = "" }: { size?: number; className?: string }) {
@@ -169,6 +170,7 @@ export function Footer() {
     );
     const isCtaExternal = isExternalUrl(ctaHref);
     const socialLinks = buildSocialLinks(data?.settings);
+    const locations: RiyadhLocation[] = (data?.locations && data.locations.length > 0) ? data.locations : defaultRiyadhLocations;
 
     return (
         <footer id="contact" className="relative isolate overflow-hidden bg-ink pt-16 text-pearl md:pt-24">
@@ -219,6 +221,27 @@ export function Footer() {
                             ))}
                         </div>
 
+                        
+                        {locations.length > 0 && (
+                            <div className="mt-5">
+                                <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gold-soft/90">
+                                    <MapPin size={13} className="text-gold" />
+                                    تغطية ومراكز التوزيع بالرياض:
+                                </span>
+                                <div className="mt-2.5 flex flex-wrap gap-1.5">
+                                    {locations.map((loc) => (
+                                        <span
+                                            key={loc.name}
+                                            className="inline-flex items-center gap-1 rounded-full border border-gold/25 bg-gold/5 px-2.5 py-0.5 text-xs text-pearl/85 backdrop-blur-sm transition-colors hover:border-gold hover:text-gold"
+                                        >
+                                            <span className="size-1.5 rounded-full bg-gold/80" />
+                                            {loc.name}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
                         {/* Social Links — Brand Block (Desktop & Mobile) */}
                         {socialLinks.length > 0 && (
                             <div className="mt-7">
@@ -268,6 +291,36 @@ export function Footer() {
                                     </a>
                                 </li>
                             ))}
+                        
+                            {locations.length > 0 && (
+                                <li className="mt-2 rounded-xl border border-pearl/10 bg-pearl/5 p-3.5">
+                                    <span className="mb-2.5 flex items-center gap-1.5 text-xs font-semibold text-gold">
+                                        <MapPin size={14} className="text-gold" />
+                                        مراكز التوزيع في الرياض:
+                                    </span>
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {locations.map((loc) => {
+                                            const locWhatsAppHref = getWhatsAppUrl(
+                                                whatsappRaw,
+                                                `السلام عليكم ورحمة الله، أود الاستفسار عن التوريد والتوصيل إلى مركز/حي: ${loc.name}`
+                                            );
+                                            return (
+                                                <a
+                                                    key={loc.name}
+                                                    href={locWhatsAppHref}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    title={`طلب توريد إلى ${loc.name} عبر واتساب`}
+                                                    className="inline-flex items-center gap-1 rounded-lg border border-gold/25 bg-ink/80 px-2 py-1 text-[11px] font-medium text-pearl/90 transition-all hover:border-gold hover:bg-gold/15 hover:text-gold active:scale-95"
+                                                >
+                                                    <span className="size-1 rounded-full bg-gold" />
+                                                    {loc.name}
+                                                </a>
+                                            );
+                                        })}
+                                    </div>
+                                </li>
+                            )}
                         </ul>
                     </FooterColumn>
 

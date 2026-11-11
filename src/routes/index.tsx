@@ -10,6 +10,7 @@ import { DigitalEcosystem } from "@/components/sections/DigitalEcosystem";
 import { ComparisonTable } from "@/components/sections/ComparisonTable";
 import { BrandsSection } from "@/components/sections/BrandsSection";
 import { AboutSection } from "@/components/sections/AboutSection";
+import { RiyadhLocations } from "@/components/sections/RiyadhLocations";
 import { Footer } from "@/components/sections/Footer";
 import { LazySection } from "@/components/effects/LazySection";
 import { sectors, type CategoryName, type SectorKey } from "@/lib/site-data";
@@ -36,7 +37,7 @@ export const Route = createFileRoute("/")({
             {
                 name: "keywords",
                 content:
-                    "سعود التجارية, مؤسسة سعود للتجارة, توريد مواد غذائية, بوليمرات بلاستيكية, تجارة عالمية السعودية, حلول رقمية ذكاء اصطناعي, سلاسل إمداد, أرز بسمتي, زيوت نباتية, حبيبات بلاستيك, SAUD TRADING",
+                    "سعود التجارية, مؤسسة سعود للتجارة, توريد مواد غذائية, بوليمرات بلاستيكية, تجارة عالمية السعودية, فروع الرياض, السويدي, الروضة, النرجس, العارض, حلول رقمية ذكاء اصطناعي, سلاسل إمداد, SAUD TRADING",
             },
             { property: "og:title", content: "سعود التجارية | تجارة عالمية وتوريد السلع الغذائية والمواد البلاستيكية والحلول الرقمية" },
             {
@@ -110,6 +111,9 @@ function Index() {
             <BrandsSection />
             <LazySection minHeight="500px" id="about">
                 <AboutSection />
+            </LazySection>
+                        <LazySection minHeight="550px" id="locations">
+                <RiyadhLocations />
             </LazySection>
             <LazySection minHeight="400px" id="contact">
                 <Footer />

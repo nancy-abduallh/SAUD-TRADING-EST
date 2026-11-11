@@ -20,6 +20,7 @@ return [
         'Comparison Table' => 'Comparison Table',
         'Stats' => 'Statistics',
         'Countries' => 'Countries',
+        'Riyadh Locations' => 'Riyadh Locations',
         'Messages' => 'Messages',
         'Settings' => 'Settings',
         'Profile' => 'Profile',
@@ -99,6 +100,11 @@ return [
         'Row' => 'Row',
         'Stat' => 'Statistic',
         'Country' => 'Country',
+        'Location' => 'Location',
+        'District name (Arabic)' => 'District Name (Arabic)',
+        'District name (English)' => 'District Name (English)',
+        'Zone / Region' => 'Zone / Region',
+        'Details / Address' => 'Details / Address',
 
         // Form field labels across all modules and settings
         'Phone' => 'Phone',
@@ -227,6 +233,7 @@ return [
         'Comparison Table' => 'جدول المقارنة',
         'Stats' => 'الإحصائيات',
         'Countries' => 'الدول والأسواق',
+        'Riyadh Locations' => 'فروع وتغطية الرياض',
         'Messages' => 'الرسائل',
         'Settings' => 'الإعدادات',
         'Profile' => 'الملف الشخصي',
@@ -306,6 +313,11 @@ return [
         'Row' => 'صف مقارنة',
         'Stat' => 'إحصائية',
         'Country' => 'دولة',
+        'Location' => 'موقع / فرع',
+        'District name (Arabic)' => 'اسم الحي / المركز (عربي)',
+        'District name (English)' => 'اسم الحي / المركز (إنجليزي)',
+        'Zone / Region' => 'النطاق الجغرافي بالرياض',
+        'Details / Address' => 'تفاصيل التغطية أو العنوان',
 
         // Form field labels across all modules and settings
         'Phone' => 'رقم الهاتف',

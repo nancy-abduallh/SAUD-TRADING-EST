@@ -149,4 +149,16 @@ return [
             fld('sort_order', 'Order', 'number'),
         ],
     ],
+    'locations' => [
+        'table' => 'locations', 'title' => 'Riyadh Locations', 'singular' => 'Location', 'dir' => 'misc',
+        'toggle' => 'is_active', 'sortable' => true, 'order' => 'sort_order, id',
+        'fields' => [
+            fld('name', 'District name (Arabic)', 'text', ['required' => 1, 'list' => 1]),
+            fld('english', 'District name (English)', 'text', ['list' => 1]),
+            fld('zone', 'Zone / Region', 'text', ['list' => 1, 'help' => 'مثال: شمال الرياض، شرق الرياض، جنوب وغرب الرياض']),
+            fld('address', 'Details / Address', 'textarea'),
+            fld('sort_order', 'Order', 'number'),
+            fld('is_active', 'Visible', 'toggle'),
+        ],
+    ],
 ];

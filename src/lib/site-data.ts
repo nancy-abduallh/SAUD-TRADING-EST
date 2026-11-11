@@ -216,3 +216,45 @@ export const stats: [string, string][] = [
     ["٣", "قطاعات رئيسية"],
     ["٢٤/٧", "متابعة التوريد"],
 ];
+
+// ---------------------------------------------------------------------------
+// Riyadh coverage & distribution hubs
+// ---------------------------------------------------------------------------
+export type RiyadhLocation = {
+    id?: number;
+    name: string;
+    english?: string;
+    zone?: string;
+    address?: string;
+};
+
+export const defaultRiyadhLocations: RiyadhLocation[] = [
+    {
+        id: 1,
+        name: "السويدي",
+        english: "Al-Suwaidi",
+        zone: "جنوب وغرب الرياض",
+        address: "مركز توزيع وتوريد مباشر للمنشآت والمصانع في نطاق جنوب وغرب العاصمة",
+    },
+    {
+        id: 2,
+        name: "الروضة",
+        english: "Al-Rawdah",
+        zone: "شرق الرياض",
+        address: "مركز توزيع وخدمة إمداد متكاملة للمؤسسات التجارية في شرق الرياض",
+    },
+    {
+        id: 3,
+        name: "النرجس",
+        english: "Al-Narjis",
+        zone: "شمال الرياض",
+        address: "محور لوجستي حديث يخدم الشركات والمشاريع الكبرى في شمال العاصمة",
+    },
+    {
+        id: 4,
+        name: "العارض",
+        english: "Al-Arid",
+        zone: "شمال الرياض",
+        address: "نقطة إمداد استراتيجية لدعم التوسع التجاري والصناعي في شمال الرياض",
+    },
+];

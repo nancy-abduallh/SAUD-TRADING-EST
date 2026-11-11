@@ -8,9 +8,10 @@ $nav = [
         ['testimonials', 'Testimonials', 'quote'], ['faqs', 'FAQs', 'help-circle'],
     ],
     'Company data' => [
+        ['locations', 'Riyadh Locations', 'map-pin'],
+        ['countries', 'Countries', 'globe'],
         ['values', 'Values', 'sparkles'], ['ecosystem', 'Digital Ecosystem', 'bot'],
         ['comparison', 'Comparison Table', 'table'], ['stats', 'Stats', 'trending-up'],
-        ['countries', 'Countries', 'globe'],
     ],
     'Inbox & system' => [
         ['messages', 'Messages', 'mail'], ['settings', 'Settings', 'settings'], ['profile', 'Profile', 'user'],

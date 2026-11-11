@@ -3,7 +3,7 @@
 -- USE saud_trading_db;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS activity_log, contact_messages, contact_info, about_content, site_settings,
+DROP TABLE IF EXISTS locations, activity_log, contact_messages, contact_info, about_content, site_settings,
   faqs, testimonials, brands, clients, countries, stats, comparison_rows, digital_ecosystem,
   site_values, products, categories, sectors, hero_slides, admins;
 SET FOREIGN_KEY_CHECKS = 1;
@@ -166,6 +166,17 @@ CREATE TABLE contact_messages (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
+CREATE TABLE locations (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(191) NOT NULL,
+  english VARCHAR(191) NULL DEFAULT '',
+  zone VARCHAR(191) NULL DEFAULT '',
+  address TEXT NULL,
+  sort_order INT NOT NULL DEFAULT 0,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
 CREATE TABLE site_settings (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   setting_key VARCHAR(100) NOT NULL UNIQUE,
@@ -326,6 +337,12 @@ INSERT INTO about_content (id, title, description, image_url, mission, vision) V
 (1,'رؤيتنا','','','','نسعى لأن نكون من الجهات الرائدة في تقديم الخدمات التجارية باحترافية وثقة مع بناء علاقات طويلة المدى مع عملائنا.');
 
 INSERT INTO contact_info (id, phone, email, address, map_url, working_hours) VALUES (1,'','','','','');
+
+INSERT INTO locations (id, name, english, zone, address, sort_order, is_active) VALUES
+(1, 'السويدي', 'Al-Suwaidi', 'جنوب وغرب الرياض', 'مركز توزيع وتوريد مباشر للمنشآت والمصانع في نطاق جنوب وغرب العاصمة', 1, 1),
+(2, 'الروضة', 'Al-Rawdah', 'شرق الرياض', 'مركز توزيع وخدمة إمداد متكاملة للمؤسسات التجارية في شرق الرياض', 2, 1),
+(3, 'النرجس', 'Al-Narjis', 'شمال الرياض', 'محور لوجستي حديث يخدم الشركات والمشاريع الكبرى في شمال العاصمة', 3, 1),
+(4, 'العارض', 'Al-Arid', 'شمال الرياض', 'نقطة إمداد استراتيجية لدعم التوسع التجاري والصناعي في شمال الرياض', 4, 1);
 
 INSERT INTO site_settings (setting_key, setting_value) VALUES
 ('site_name','SAUD TRADING EST.'),('tagline',''),('facebook',''),('twitter',''),

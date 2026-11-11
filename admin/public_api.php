@@ -71,6 +71,13 @@ $json = json_encode([
         rows('SELECT * FROM clients WHERE is_active = 1 ORDER BY sort_order, id')),
     'countries' => array_map(fn($r) => ['name' => $r['name'], 'english' => $r['english']],
         rows('SELECT * FROM countries ORDER BY sort_order, id')),
+    'locations' => array_map(fn($r) => [
+        'id' => (int)$r['id'],
+        'name' => $r['name'],
+        'english' => (string)($r['english'] ?? ''),
+        'zone' => (string)($r['zone'] ?? ''),
+        'address' => (string)($r['address'] ?? ''),
+    ], rows('SELECT * FROM locations WHERE is_active = 1 ORDER BY sort_order, id')),
     'stats' => array_map(fn($r) => [$r['value'], $r['label']], rows('SELECT * FROM stats ORDER BY sort_order, id')),
     'about' => $about ? ['title' => $about['title'], 'description' => (string)$about['description'],
         'image' => $img($about['image_url']), 'mission' => (string)$about['mission']] : null,

@@ -36,8 +36,9 @@ require __DIR__ . '/includes/header.php';
 <div class="card pad mt">
   <h3><?= e(__('Managed on their own pages')) ?></h3>
   <div class="quick">
-    <a class="btn" href="stats.php"><i data-lucide="trending-up"></i> <?= e(__('Stats')) ?></a>
+    <a class="btn" href="locations.php"><i data-lucide="map-pin"></i> <?= e(__('Riyadh Locations')) ?></a>
     <a class="btn" href="countries.php"><i data-lucide="globe"></i> <?= e(__('Countries')) ?></a>
+    <a class="btn" href="stats.php"><i data-lucide="trending-up"></i> <?= e(__('Stats')) ?></a>
     <a class="btn" href="values.php"><i data-lucide="sparkles"></i> <?= e(__('Values')) ?></a>
     <a class="btn" href="ecosystem.php"><i data-lucide="bot"></i> <?= e(__('Digital Ecosystem')) ?></a>
     <a class="btn" href="comparison.php"><i data-lucide="table"></i> <?= e(__('Comparison Table')) ?></a>

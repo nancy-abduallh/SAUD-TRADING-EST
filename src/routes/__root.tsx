@@ -165,6 +165,11 @@ function RootShell({ children }: { children: ReactNode }) {
         },
         "areaServed": [
           { "@type": "Country", "name": "Saudi Arabia" },
+          { "@type": "City", "name": "Riyadh" },
+          { "@type": "AdministrativeArea", "name": "السويدي - جنوب وغرب الرياض" },
+          { "@type": "AdministrativeArea", "name": "الروضة - شرق الرياض" },
+          { "@type": "AdministrativeArea", "name": "النرجس - شمال الرياض" },
+          { "@type": "AdministrativeArea", "name": "العارض - شمال الرياض" },
           { "@type": "Country", "name": "Egypt" },
           { "@type": "Country", "name": "United Arab Emirates" },
         ],

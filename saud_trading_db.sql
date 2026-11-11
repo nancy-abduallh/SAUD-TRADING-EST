@@ -448,6 +448,35 @@ INSERT INTO `sectors` (`id`, `slug`, `title`, `english`, `description`, `image`,
 -- --------------------------------------------------------
 
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `locations`
+--
+
+CREATE TABLE IF NOT EXISTS `locations` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) NOT NULL,
+  `english` varchar(191) DEFAULT '',
+  `zone` varchar(191) DEFAULT '',
+  `address` text DEFAULT NULL,
+  `sort_order` int(11) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `locations`
+--
+
+INSERT INTO `locations` (`id`, `name`, `english`, `zone`, `address`, `sort_order`, `is_active`) VALUES
+(1, 'السويدي', 'Al-Suwaidi', 'جنوب وغرب الرياض', 'مركز توزيع وتوريد مباشر للمنشآت والمصانع في نطاق جنوب وغرب العاصمة', 1, 1),
+(2, 'الروضة', 'Al-Rawdah', 'شرق الرياض', 'مركز توزيع وخدمة إمداد متكاملة للمؤسسات التجارية في شرق الرياض', 2, 1),
+(3, 'النرجس', 'Al-Narjis', 'شمال الرياض', 'محور لوجستي حديث يخدم الشركات والمشاريع الكبرى في شمال العاصمة', 3, 1),
+(4, 'العارض', 'Al-Arid', 'شمال الرياض', 'نقطة إمداد استراتيجية لدعم التوسع التجاري والصناعي في شمال الرياض', 4, 1);
+
 -- Table structure for table `site_settings`
 --
 

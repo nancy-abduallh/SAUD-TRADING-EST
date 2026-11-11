@@ -13,6 +13,7 @@ const LINKS = [
     { href: "#vision", label: "رؤيتنا" },
     { href: "#clients", label: "عملاؤنا" },
     { href: "#about", label: "عن الشركة" },
+    { href: "#locations", label: "مراكز الرياض" },
 ];
 
 export function Navbar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (open: boolean) => void }) {
