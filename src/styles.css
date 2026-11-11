@@ -351,6 +351,26 @@
   }
 }
 
+@keyframes radar-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes beacon-pulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.05);
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /* Utilities                                                          */
 /* ------------------------------------------------------------------ */
@@ -396,6 +416,14 @@
 
 @utility anim-pulse-ring {
   animation: pulse-ring 2.2s ease-out infinite;
+}
+
+@utility anim-radar-sweep {
+  animation: radar-sweep 9s linear infinite;
+}
+
+@utility anim-beacon {
+  animation: beacon-pulse 3s ease-in-out infinite;
 }
 
 @utility gradient-text-gold {
