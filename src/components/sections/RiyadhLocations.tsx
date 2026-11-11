@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
     ArrowLeft,
     Building2,
@@ -17,6 +18,7 @@ import { MovingBg } from "@/components/effects/MovingBg";
 import { Reveal } from "@/components/effects/Reveal";
 import { defaultRiyadhLocations, type RiyadhLocation } from "@/lib/site-data";
 import { useSiteApi } from "@/lib/use-site-api";
+import { cn } from "@/lib/utils";
 import { getWhatsAppUrl, isExternalUrl } from "@/lib/whatsapp";
 
 const zoneIcons: Record<string, typeof MapPin> = {
@@ -39,6 +41,7 @@ export function RiyadhLocations() {
         : defaultRiyadhLocations;
 
     const whatsappRaw = data?.settings?.whatsapp || data?.contact?.phone || "";
+    const [selectedHub, setSelectedHub] = useState<string | null>(null);
 
     return (
         <section
@@ -103,7 +106,7 @@ export function RiyadhLocations() {
                     </Reveal>
                 </div>
 
-                {/* Logistics Radar & Network Status Bar */}
+                {/* Logistics Radar & Interactive Hub Selector Bar */}
                 <Reveal delay={250}>
                     <div className="mt-12 overflow-hidden rounded-2xl border border-gold/30 bg-gradient-to-r from-[#0d1c3a]/90 via-[#10244c]/90 to-[#0d1c3a]/90 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl md:p-6">
                         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -126,17 +129,39 @@ export function RiyadhLocations() {
                                 </div>
                             </div>
 
-                            {/* Hub Informational Badges */}
+                            {/* Hub Selector Pills with active selection & dimming */}
                             <div className="flex flex-wrap items-center gap-2">
-                                {locations.map((loc) => (
-                                    <div
-                                        key={loc.name}
-                                        className="flex items-center gap-1.5 rounded-xl border border-gold/30 bg-gold/10 px-3 py-1.5 text-xs font-bold text-gold-soft shadow-xs"
-                                    >
-                                        <span className="size-2 rounded-full bg-emerald-400" />
-                                        <span>حي {loc.name}</span>
-                                    </div>
-                                ))}
+                                <button
+                                    type="button"
+                                    onClick={() => setSelectedHub(null)}
+                                    className={cn(
+                                        "rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all duration-300 cursor-pointer",
+                                        selectedHub === null
+                                            ? "gradient-bg-gold text-ink shadow-[0_0_15px_rgba(212,175,55,0.6)]"
+                                            : "border border-pearl/15 bg-white/5 text-pearl/80 hover:border-gold/50 hover:text-white"
+                                    )}
+                                >
+                                    عرض جميع المراكز (4)
+                                </button>
+                                {locations.map((loc) => {
+                                    const isSelected = selectedHub === loc.name;
+                                    return (
+                                        <button
+                                            key={loc.name}
+                                            type="button"
+                                            onClick={() => setSelectedHub(isSelected ? null : loc.name)}
+                                            className={cn(
+                                                "flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all duration-300 cursor-pointer",
+                                                isSelected
+                                                    ? "gradient-bg-gold text-ink shadow-[0_0_15px_rgba(212,175,55,0.6)]"
+                                                    : "border border-gold/25 bg-gold/10 text-gold-soft hover:border-gold hover:bg-gold/20 hover:text-white"
+                                            )}
+                                        >
+                                            <span className={cn("size-2 rounded-full", isSelected ? "bg-ink" : "bg-emerald-400 animate-ping")} />
+                                            <span>حي {loc.name}</span>
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
 
@@ -162,7 +187,7 @@ export function RiyadhLocations() {
                     </div>
                 </Reveal>
 
-                {/* Locations Grid: 100% Static, High-Contrast Obsidian Glass Cards */}
+                {/* Locations Grid: Static positioning with active selection highlight and dimming effect */}
                 <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {locations.map((loc, idx) => {
                         const Icon = zoneIcons[loc.zone || ""] || MapPin;
@@ -172,11 +197,23 @@ export function RiyadhLocations() {
                         );
                         const isExternal = isExternalUrl(itemWhatsAppUrl);
                         const tags = defaultTagsByHub[loc.name] || ["توريد وتوزيع مباشر", "أسطول نقل سريع", "جاهزية فورية"];
+                        const isHighlighted = selectedHub === null || selectedHub === loc.name;
+                        const isActivelySelected = selectedHub === loc.name;
 
                         return (
                             <div
                                 key={loc.id || loc.name}
-                                className="relative flex h-full flex-col justify-between rounded-2xl border-2 border-gold/35 bg-gradient-to-b from-[#132347] via-[#0e1933] to-[#060c1c] p-6 shadow-[0_16px_36px_rgba(0,0,0,0.65)] backdrop-blur-xl"
+                                className={cn(
+                                    "relative flex h-full flex-col justify-between rounded-2xl p-6 transition-all duration-300 backdrop-blur-xl border-2",
+                                    isHighlighted
+                                        ? cn(
+                                            "bg-gradient-to-b from-[#132347] via-[#0e1933] to-[#060c1c]",
+                                            isActivelySelected
+                                                ? "border-gold shadow-[0_0_35px_rgba(212,175,55,0.45)] ring-1 ring-gold/60"
+                                                : "border-gold/35 shadow-[0_16px_36px_rgba(0,0,0,0.65)]"
+                                        )
+                                        : "border-pearl/10 bg-[#0a1224]/80 opacity-40 hover:opacity-100 hover:border-gold/35 shadow-[0_8px_20px_rgba(0,0,0,0.4)]"
+                                )}
                             >
                                 <div>
                                     {/* Top Meta: Number + Zone badge */}
