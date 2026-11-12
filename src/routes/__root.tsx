@@ -77,6 +77,11 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   );
 }
 
+const googleVerificationToken =
+  (typeof process !== "undefined" && process.env?.GOOGLE_SITE_VERIFICATION_TOKEN) ||
+  (typeof import.meta !== "undefined" && (import.meta as any).env?.VITE_GOOGLE_SITE_VERIFICATION_TOKEN) ||
+  "";
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
     head: () => ({
@@ -86,7 +91,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { name: "author", content: "مؤسسة سعود للتجارة | SAUD TRADING EST." },
         { name: "theme-color", content: "#060c1c" },
         { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
-        { name: "google-site-verification", content: "GOOGLE_SITE_VERIFICATION_TOKEN" },
+        ...(googleVerificationToken && googleVerificationToken !== "GOOGLE_SITE_VERIFICATION_TOKEN"
+          ? [{ name: "google-site-verification", content: googleVerificationToken }]
+          : []),
         { property: "og:site_name", content: "مؤسسة سعود للتجارة | SAUD TRADING EST." },
         { property: "og:locale", content: "ar_SA" },
         { property: "og:type", content: "website" },
